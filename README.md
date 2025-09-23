@@ -16,7 +16,7 @@
 ``` bash
 git clone https://github.com/tot-camiy-coder/Google-Ocr-Translator.git
 cd Google-Ocr-Translator
-pip install selenium undetected-chromedriver pyautogui pygetwindow pillow keyboard
+pip install selenium undetected-chromedriver pyautogui pygetwindow pillow keyboard pywin32
 ```
 
 > [!WARNING] 

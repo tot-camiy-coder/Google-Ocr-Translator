@@ -51,15 +51,18 @@ def paste_and_result():
     except:
         print("no found close button ")
 
+    alt_tab()
+    # ждём загрузки .png файла
+    time.sleep(.4)
+
+def alt_tab():
     pyautogui.keyDown('alt')
     pyautogui.press('tab')
     time.sleep(0.05)
     pyautogui.keyUp('alt')
-    # ждём загрузки .png файла
-    time.sleep(.4)
-
 
 def download():
+    set_focus()
     # вставляем скопированное изображение в Google
     #ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
     try:
@@ -108,6 +111,8 @@ def work4screatch():
     while not os.path.isfile(DOWNLOAD_FILE):
         download()
         time.sleep(.4)
+
+    alt_tab()
     
     grab.ImageRegion(region, Image.open(DOWNLOAD_FILE))
 
@@ -120,6 +125,8 @@ def work4already():
     while not os.path.isfile(DOWNLOAD_FILE):
         download()
         time.sleep(.4)
+
+    alt_tab()
     
     grab.ImageTopRight(Image.open(DOWNLOAD_FILE))
 

@@ -72,9 +72,6 @@ class ImageRegion:
 
         self.root.mainloop()
 
-import tkinter as tk
-from PIL import Image, ImageTk
-
 class ImageTopRight:
     def __init__(self, image: Image.Image):
         self.root = tk.Tk()

@@ -11,7 +11,7 @@ from PIL import Image
 import pygetwindow as gw
 import pyautogui
 import getpass
-#
+
 
 # -- PREFERENSES --
 DOWNLOAD_FILE = 'C:/Users/'+getpass.getuser()+'/Downloads/translated_image_ru.png'

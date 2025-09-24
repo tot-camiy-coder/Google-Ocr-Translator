@@ -7,15 +7,13 @@ import undetected_chromedriver as uc
 import time
 import keyboard
 import grab, utils, os
-from PIL import Image
+from PIL import Image, ImageGrab
 import pygetwindow as gw
 import pyautogui
 import getpass
-#
 
 # -- PREFERENSES --
 DOWNLOAD_FILE = 'C:/Users/'+getpass.getuser()+'/Downloads/translated_image_ru.png'
-print(DOWNLOAD_FILE)
 
 # -- START BROWSER --
 options = uc.ChromeOptions()
@@ -28,9 +26,6 @@ driver.set_window_position(50,50)
 driver.set_window_size(200,200)
 
 driver.get("https://translate.google.co.in/?sl=auto&tl=ru&op=images")
-
-time.sleep(6) # loading site
-
 
 def paste_and_result():
     # если есть кнопка закрытия, закрываем
@@ -119,16 +114,28 @@ def work4screatch():
 def work4already():
     if os.path.isfile(DOWNLOAD_FILE):
         os.remove(DOWNLOAD_FILE)
-    
-    paste_and_result()
 
-    while not os.path.isfile(DOWNLOAD_FILE):
-        download()
-        time.sleep(.4)
+    try:
+        img = ImageGrab.grabclipboard()
+        if img is None:
+            print("Нет изображения в буфере обмена! Нажмите Ctrl+C на картинке и попробуйте снова.")
+            return
+    except Exception as e:
+        print(f"Ошибка при проверке буфера обмена: {e}")
+        return
 
-    alt_tab()
-    
-    grab.ImageTopRight(Image.open(DOWNLOAD_FILE))
+    try:
+        paste_and_result()
+
+        while not os.path.isfile(DOWNLOAD_FILE):
+            download()
+            time.sleep(.4)
+
+        alt_tab()
+        grab.ImageTopRight(Image.open(DOWNLOAD_FILE))
+
+    except Exception as e:
+        print(f"Ошибка в work4already: {e}")
 
 def set_focus():
     for i in range(5):
@@ -143,10 +150,17 @@ def set_focus():
             driver.set_window_size(int(x)+10, int(y)+10)
             print("Size Up")
 
+def safe_wrapper(func):
+    def wrapper():
+        try:
+            func()
+        except Exception as e:
+            print(f"Ошибка: {e}")
+    return wrapper
 
 if __name__ == '__main__':
-    keyboard.add_hotkey("ctrl+alt+x", work4screatch)
-    keyboard.add_hotkey("ctrl+alt+c", work4already)
+    keyboard.add_hotkey("ctrl+alt+x", safe_wrapper(work4screatch))
+    keyboard.add_hotkey("ctrl+alt+c", safe_wrapper(work4already))
 
     print("* Ctrl+Alt+X - перевести скриншот. \n* Ctrl+Alt+C - перевести изображение которое в буфере обмена. \n* ESC - для выхода.")
 

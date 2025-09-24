@@ -10,10 +10,12 @@ import grab, utils, os
 from PIL import Image
 import pygetwindow as gw
 import pyautogui
+import getpass
 
 
 # -- PREFERENSES --
-DOWNLOAD_FILE = 'C:/Users/none/Downloads/translated_image_ru.png'
+DOWNLOAD_FILE = 'C:/Users/'+getpass.getuser()+'/Downloads/translated_image_ru.png'
+print(DOWNLOAD_FILE)
 
 # -- START BROWSER --
 options = uc.ChromeOptions()
@@ -66,7 +68,7 @@ def download():
     except:
         print("no found paste button")
     time.sleep(0.1)
-    
+
     # Прокрутка в начало страницы
     driver.execute_script("window.scrollTo(0, 0);")
 

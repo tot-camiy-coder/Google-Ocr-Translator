@@ -31,66 +31,23 @@ time.sleep(6) # loading site
 
 
 def paste_and_result():
-    # Функция для клика через JS
-    def click_js(selector, index=0):
-        script = f"""
-        var elems = document.querySelectorAll('{selector}');
-        if(elems.length > {index}) {{
-            elems[{index}].click();
-            return true;
-        }} else {{
-            return false;
-        }}
-        """
-        return driver.execute_script(script)
-
     # если есть кнопка закрытия, закрываем
     try:
-        if not click_js('.VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.mN1ivc.B0czFe'):
-            print("no found close button 1/4")
+        elem = driver.find_element(By.CSS_SELECTOR, '.VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.mN1ivc.B0czFe')
+        elem.click()
     except:
-        print("no found close button 1/4")
+        print("no found close button ")
 
     time.sleep(0.1)
 
-    # вставляем скопированное изображение в Google
-    ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
-    time.sleep(0.1)
-    
-    # ждём и кликаем по кнопке загрузки
-    try:
-        for i in range(6):
-            #print(driver.execute_script("return document.querySelectorAll('.VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-Bz112c-M1Soyc.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.LjDxcd.XhPA0b.LQeN7.qaqQfe').length"))
-            if not click_js(".VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-Bz112c-M1Soyc.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.LjDxcd.XhPA0b.LQeN7.qaqQfe", 1):
-                time.sleep(.1)
-                set_focus()
-                continue
-            else:
-                break
-        else:
-            raise None
-    except:
-        print("no found download button 2/4")
-        try:
-            for i in range(6):
-                if not click_js(".VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.mN1ivc.VThJZd", 1):
-                    time.sleep(.1)
-                    set_focus()
-                    continue
-                else:
-                    break
-            else:
-                raise None
-        except:
-            print("no found small download button 3/4")
-    
+    download()
     
     # если есть кнопка закрытия, закрываем
     try:
-        if not click_js('.VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.mN1ivc.B0czFe'):
-            print("no found close button 1/4")
+        elem = driver.find_element(By.CSS_SELECTOR, '.VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.mN1ivc.B0czFe')
+        elem.click()
     except:
-        print("no found close button 1/4")
+        print("no found close button ")
 
     pyautogui.keyDown('alt')
     pyautogui.press('tab')
@@ -101,42 +58,38 @@ def paste_and_result():
 
 
 def download():
-    def click_js(selector, index=0):
-        script = f"""
-        var elems = document.querySelectorAll('{selector}');
-        if(elems.length > {index}) {{
-            elems[{index}].click();
-            return true;
-        }} else {{
-            return false;
-        }}
-        """
-        return driver.execute_script(script)
+    # вставляем скопированное изображение в Google
+    #ActionChains(driver).key_down(Keys.CONTROL).send_keys("v").key_up(Keys.CONTROL).perform()
     try:
-        for i in range(6):
+        elem = driver.find_element(By.CSS_SELECTOR, '.VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-INsAgc.VfPpkd-LgbsSe-OWXEXe-Bz112c-M1Soyc.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.Rj2Mlf.OLiIxf.PDpWxe.LQeN7.yUbRwc.xupp0')
+        elem.click()
+    except:
+        print("no found paste button")
+    time.sleep(0.1)
+    
+    # Прокрутка в начало страницы
+    driver.execute_script("window.scrollTo(0, 0);")
+
+    # ждём и кликаем по кнопке загрузки
+    try:
+        for i in range(2):
             #print(driver.execute_script("return document.querySelectorAll('.VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-Bz112c-M1Soyc.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.LjDxcd.XhPA0b.LQeN7.qaqQfe').length"))
-            if not click_js(".VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-Bz112c-M1Soyc.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.LjDxcd.XhPA0b.LQeN7.qaqQfe", 1):
-                time.sleep(.1)
-                set_focus()
-                continue
-            else:
-                break
+            elem = driver.find_elements(By.CSS_SELECTOR, ".VfPpkd-LgbsSe.VfPpkd-LgbsSe-OWXEXe-Bz112c-M1Soyc.VfPpkd-LgbsSe-OWXEXe-dgl2Hf.LjDxcd.XhPA0b.LQeN7.qaqQfe")
+            elem[1].click()
+            break
         else:
             raise None
     except:
-        print("no found download button 2/4")
+        print("no found download button ")
         try:
-            for i in range(6):
-                if not click_js(".VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.mN1ivc.VThJZd", 1):
-                    time.sleep(.1)
-                    set_focus()
-                    continue
-                else:
-                    break
+            for i in range(2):
+                elem = driver.find_elements(By.CSS_SELECTOR, ".VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.mN1ivc.VThJZd")
+                elem[1].click()
+                break
             else:
                 raise None
         except:
-            print("no found small download button 3/4")
+            print("no found small download button ")
 
 def work4screatch():
     region = grab.ScreenSelection().get_region()
@@ -179,6 +132,7 @@ def set_focus():
             x = size['width']
             y = size['height']
             driver.set_window_size(int(x)+10, int(y)+10)
+            print("Size Up")
 
 
 if __name__ == '__main__':
